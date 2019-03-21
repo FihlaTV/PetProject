@@ -78,6 +78,7 @@ public class DoctorFragment extends Fragment implements View.OnTouchListener {
                             if (mDoctorAdapter == null) {
                                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                                 mDoctorAdapter = new DoctorAdapter();
+                                mDoctorAdapter.setData(getActivity());
                                 mDoctorAdapter.setOnItemClickListener(mListenerClickListener);
                                 mDoctorAdapter.setDataSilently(mDoctorBeanList);
                                 mRecyclerView.setAdapter(mDoctorAdapter);

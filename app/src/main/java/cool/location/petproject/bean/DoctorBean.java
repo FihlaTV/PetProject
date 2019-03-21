@@ -8,6 +8,7 @@ public class DoctorBean extends BmobObject {
     private String goodAt;
     private String workFrom;
     private String phoneNumber;
+    private String avatar;
 
     public String getDoctorName() {
         return doctorName;
@@ -42,6 +43,14 @@ public class DoctorBean extends BmobObject {
         this.goodAt = goodAt;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     @Override
     public String toString() {
         return "DoctorBean{" +
@@ -49,6 +58,7 @@ public class DoctorBean extends BmobObject {
                 ", goodAt='" + goodAt + '\'' +
                 ", workFrom='" + workFrom + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
+                ", avatar='" + avatar + '\'' +
                 '}';
     }
 }

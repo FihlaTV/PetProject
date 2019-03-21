@@ -48,10 +48,4 @@ public class CurrentUserHelper {
             SharedPrefUtils.getInstance().removeValue(AppConstant.SharedPreferenceKey.CURRENT_USER);
         }
     }
-
-    public void updateCurrentUser(String jason) {
-        if (!TextUtils.isEmpty(jason)) {
-            SharedPrefUtils.getInstance().putString(AppConstant.SharedPreferenceKey.CURRENT_USER, jason);
-        }
-    }
 }

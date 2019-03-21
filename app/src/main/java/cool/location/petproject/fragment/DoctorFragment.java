@@ -25,17 +25,17 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cool.location.petproject.R;
-import cool.location.petproject.adapter.ReaderAdapter;
-import cool.location.petproject.bean.Book;
-import cool.location.petproject.utils.ActivityUtil;
+import cool.location.petproject.adapter.DoctorAdapter;
+import cool.location.petproject.bean.DoctorBean;
 
 
-public class ReaderFragment extends Fragment implements View.OnTouchListener {
+public class DoctorFragment extends Fragment implements View.OnTouchListener {
 
-    @BindView(R.id.rlv_book_reader) RecyclerView mRecyclerView;
+    @BindView(R.id.rlv_listener_fragment) RecyclerView mRecyclerView;
+    private DoctorAdapter mDoctorAdapter;
+    private List<DoctorBean> mDoctorBeanList = new ArrayList<>();
     Unbinder unbinder;
-    private List<Book> mBookList = new ArrayList<>();
-    private ReaderAdapter mReaderAdapter;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class ReaderFragment extends Fragment implements View.OnTouchListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_moment, container, false);
+        View view = inflater.inflate(R.layout.fragment_message, container, false);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
@@ -53,7 +53,7 @@ public class ReaderFragment extends Fragment implements View.OnTouchListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         view.setOnTouchListener(this);
-        getBookList();
+        getListenerList();
     }
 
     @Override
@@ -66,38 +66,38 @@ public class ReaderFragment extends Fragment implements View.OnTouchListener {
         return true;
     }
 
-    public void getBookList() {
-        BmobQuery<Book> query = new BmobQuery<>();
+    public void getListenerList() {
+        BmobQuery<DoctorBean> query = new BmobQuery<>();
         query.setLimit(50).order("createdAt")
-                .findObjects(new FindListener<Book>() {
+                .findObjects(new FindListener<DoctorBean>() {
                     @Override
-                    public void done(List<Book> bookList, BmobException e) {
+                    public void done(List<DoctorBean> doctorBeanList, BmobException e) {
                         if (e == null) {
-                            LogUtils.d("ReaderFragment BmobQuery success:" + bookList);
-                            mBookList = bookList;
-                            if (mReaderAdapter == null) {
+                            LogUtils.d("DoctorFragment BmobQuery success:" + mDoctorAdapter);
+                            mDoctorBeanList = doctorBeanList;
+                            if (mDoctorAdapter == null) {
                                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                                mReaderAdapter = new ReaderAdapter();
-                                mReaderAdapter.setOnItemClickListener(mBookClickListener);
-                                mReaderAdapter.setDataSilently(mBookList);
-                                mRecyclerView.setAdapter(mReaderAdapter);
+                                mDoctorAdapter = new DoctorAdapter();
+                                mDoctorAdapter.setOnItemClickListener(mListenerClickListener);
+                                mDoctorAdapter.setDataSilently(mDoctorBeanList);
+                                mRecyclerView.setAdapter(mDoctorAdapter);
                             } else {
-                                mReaderAdapter.setData(mBookList);
+                                mDoctorAdapter.setData(mDoctorBeanList);
                             }
 
                         } else {
-                            LogUtils.d("ReaderFragment BmobQuery failed : " + e);
+                            LogUtils.d("DoctorFragment BmobQuery failed : " + e);
                         }
                     }
                 });
     }
 
-    private AdapterView.OnItemClickListener mBookClickListener = new AdapterView.OnItemClickListener() {
+    private AdapterView.OnItemClickListener mListenerClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
-            if (mReaderAdapter == null) { return; }
-            Book book = mReaderAdapter.getItem(position);
-            ActivityUtil.startBookReaderActivity(ReaderFragment.this, book);
+            if (mDoctorAdapter == null) { return; }
+            DoctorBean doctorBean = mDoctorAdapter.getItem(position);
+//            ActivityUtil.startPlayListenerActivity(DoctorFragment.this, doctorBean);
         }
     };
 

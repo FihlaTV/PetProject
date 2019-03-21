@@ -29,7 +29,8 @@
         android:layout_marginTop="@dimen/dp5"
         android:gravity="center"
         android:text="writer"
-        android:textSize="18sp"/>
+        android:textSize="18sp"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/tv_introduce_item_book_reader"

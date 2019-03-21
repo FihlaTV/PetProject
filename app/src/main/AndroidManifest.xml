@@ -47,7 +47,7 @@
         </provider>
 
         <activity
-            android:name=".activity.BookReaderActivity"
+            android:name=".activity.ReaderBaiKeActivity"
             android:screenOrientation="portrait"/>
 
         <activity
@@ -60,6 +60,14 @@
 
         <activity
             android:name=".activity.PlayVideoActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"/>
 
     </application>

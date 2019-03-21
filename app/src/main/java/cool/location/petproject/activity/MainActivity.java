@@ -16,10 +16,10 @@ import cn.bmob.v3.Bmob;
 import cool.location.petproject.R;
 import cool.location.petproject.base.BaseActivity;
 import cool.location.petproject.base.TabEntity;
-import cool.location.petproject.fragment.ListenerFragment;
-import cool.location.petproject.fragment.ReaderFragment;
-import cool.location.petproject.fragment.TranslateFragment;
-import cool.location.petproject.fragment.VideoFragment;
+import cool.location.petproject.fragment.DoctorFragment;
+import cool.location.petproject.fragment.NoteFragment;
+import cool.location.petproject.fragment.BaiKeFragment;
+import cool.location.petproject.fragment.MeFragment;
 import cool.location.petproject.utils.ToastHelper;
 
 public class MainActivity extends BaseActivity {
@@ -27,13 +27,13 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.tab_layout_main_activity) CommonTabLayout mCommonTabLayout;
     @BindView(R.id.ll_main_activity) LinearLayout activityMain;
 
-    private TranslateFragment mTranslateFragment;
-    private ReaderFragment mReaderFragment;
-    private ListenerFragment mListenerFragment;
-    private VideoFragment mVideoFragment;
+    private NoteFragment mNoteFragment;
+    private BaiKeFragment mBaiKeFragment;
+    private DoctorFragment mDoctorFragment;
+    private MeFragment mMeFragment;
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
 
-    private String[] mTitles = {"宠物百度", "宠物贴吧", "宠物医疗", "我的"};
+    private String[] mTitles = {"宠物百科", "宠物贴吧", "宠物医疗", "我的"};
     private int[] mIconUnselectIds = {R.drawable.icon_message_unpress, R.drawable.icon_job_unpress, R.drawable.icon_discover_unpress, R.drawable.icon_me_unpress};
     private int[] mIconSelectIds = {R.drawable.icon_message_press, R.drawable.icon_job_press, R.drawable.icon_discover_press, R.drawable.icon_me_press};
     private long firstBack = -1;
@@ -44,7 +44,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         //第一：默认初始化
-        Bmob.initialize(this, "50fce2799c4f7c973de087d7b2cf6f37");
+        Bmob.initialize(this, "21d1459c12029098e125ce14730eb285");
         initTab();
         initFragment();
     }
@@ -69,21 +69,24 @@ public class MainActivity extends BaseActivity {
     public void initFragment() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         int currentTabPosition = 0;
-        if (mTranslateFragment == null) {
-            mTranslateFragment = new TranslateFragment();
-            transaction.add(R.id.ll_main_activity, mTranslateFragment);
+
+        if (mBaiKeFragment == null) {
+            mBaiKeFragment = new BaiKeFragment();
+            transaction.add(R.id.ll_main_activity, mBaiKeFragment);
         }
-        if (mReaderFragment == null) {
-            mReaderFragment = new ReaderFragment();
-            transaction.add(R.id.ll_main_activity, mReaderFragment);
+
+        if (mNoteFragment == null) {
+            mNoteFragment = new NoteFragment();
+            transaction.add(R.id.ll_main_activity, mNoteFragment);
         }
-        if (mListenerFragment == null) {
-            mListenerFragment = new ListenerFragment();
-            transaction.add(R.id.ll_main_activity, mListenerFragment);
+
+        if (mDoctorFragment == null) {
+            mDoctorFragment = new DoctorFragment();
+            transaction.add(R.id.ll_main_activity, mDoctorFragment);
         }
-        if (mVideoFragment == null) {
-            mVideoFragment = new VideoFragment();
-            transaction.add(R.id.ll_main_activity, mVideoFragment);
+        if (mMeFragment == null) {
+            mMeFragment = new MeFragment();
+            transaction.add(R.id.ll_main_activity, mMeFragment);
         }
         transaction.commit();
         SwitchTo(currentTabPosition);
@@ -94,31 +97,31 @@ public class MainActivity extends BaseActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         switch (position) {
             case 0:
-                transaction.show(mTranslateFragment);
-                transaction.hide(mReaderFragment);
-                transaction.hide(mListenerFragment);
-                transaction.hide(mVideoFragment);
+                transaction.show(mBaiKeFragment);
+                transaction.hide(mNoteFragment);
+                transaction.hide(mDoctorFragment);
+                transaction.hide(mMeFragment);
                 transaction.commitAllowingStateLoss();
                 break;
             case 1:
-                transaction.show(mReaderFragment);
-                transaction.hide(mTranslateFragment);
-                transaction.hide(mListenerFragment);
-                transaction.hide(mVideoFragment);
+                transaction.show(mNoteFragment);
+                transaction.hide(mBaiKeFragment);
+                transaction.hide(mDoctorFragment);
+                transaction.hide(mMeFragment);
                 transaction.commitAllowingStateLoss();
                 break;
             case 2:
-                transaction.show(mListenerFragment);
-                transaction.hide(mTranslateFragment);
-                transaction.hide(mReaderFragment);
-                transaction.hide(mVideoFragment);
+                transaction.show(mDoctorFragment);
+                transaction.hide(mNoteFragment);
+                transaction.hide(mBaiKeFragment);
+                transaction.hide(mMeFragment);
                 transaction.commitAllowingStateLoss();
                 break;
             case 3:
-                transaction.show(mVideoFragment);
-                transaction.hide(mTranslateFragment);
-                transaction.hide(mReaderFragment);
-                transaction.hide(mListenerFragment);
+                transaction.show(mMeFragment);
+                transaction.hide(mNoteFragment);
+                transaction.hide(mBaiKeFragment);
+                transaction.hide(mDoctorFragment);
                 transaction.commitAllowingStateLoss();
                 break;
             default:

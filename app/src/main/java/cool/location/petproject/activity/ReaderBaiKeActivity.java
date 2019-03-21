@@ -1,6 +1,7 @@
 package cool.location.petproject.activity;
 
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -12,11 +13,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cool.location.petproject.R;
 import cool.location.petproject.base.BaseActivity;
-import cool.location.petproject.bean.Book;
+import cool.location.petproject.bean.BaiKeBean;
 import cool.location.petproject.constants.AppConstant;
 import cool.location.petproject.utils.ResourceUtil;
 
-public class BookReaderActivity extends BaseActivity {
+public class ReaderBaiKeActivity extends BaseActivity {
 
     @BindView(R.id.tv_text_value_read_book_activity) TextView mBookValue;
     @BindView(R.id.btn_chang_night_read_book_activity) Button mChangNight;
@@ -25,7 +26,7 @@ public class BookReaderActivity extends BaseActivity {
     @BindView(R.id.tv_title_read_book_activity) TextView mTitle;
     @BindView(R.id.tv_writer_read_book_activity) TextView mWriter;
     @BindView(R.id.btn_chang_bg_color_read_book_activity) Button btnChangBgColorReadBookActivity;
-    private Book mBook;
+    private BaiKeBean mBaiKeBean;
     private int changBGClickCount;
 
     @Override
@@ -33,15 +34,15 @@ public class BookReaderActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_book);
         ButterKnife.bind(this);
-        mBook = (Book) getIntent().getSerializableExtra(AppConstant.IntentKey.EXTRA_DATA);
-        LogUtils.d("BookReaderActivity  mBook : " + mBook);
-        if (mBook == null) {
+        mBaiKeBean = (BaiKeBean) getIntent().getSerializableExtra(AppConstant.IntentKey.EXTRA_DATA);
+        LogUtils.d("ReaderBaiKeActivity  mBaiKeBean : " + mBaiKeBean);
+        if (mBaiKeBean == null) {
             onBackPressed();
             return;
         }
-        mTitle.setText(mBook.getTitle());
-        mWriter.setText(mBook.getWriter());
-        mBookValue.setText(mBook.getValue());
+        mTitle.setText(mBaiKeBean.getTitle());
+        mBookValue.setText(mBaiKeBean.getValue());
+        mBookValue.setMovementMethod(ScrollingMovementMethod.getInstance());
     }
 
     @OnClick(R.id.btn_chang_night_read_book_activity)

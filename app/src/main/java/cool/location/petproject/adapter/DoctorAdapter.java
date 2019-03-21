@@ -11,10 +11,10 @@ import butterknife.ButterKnife;
 import cool.location.petproject.R;
 import cool.location.petproject.base.BaseRVAdapter;
 import cool.location.petproject.base.IViewHolder;
-import cool.location.petproject.bean.Listener;
+import cool.location.petproject.bean.DoctorBean;
 
 
-public class ListenerAdapter extends BaseRVAdapter<Listener, ListenerAdapter.ListenerAdapterHolder> {
+public class DoctorAdapter extends BaseRVAdapter<DoctorBean, DoctorAdapter.ListenerAdapterHolder> {
 
     @Override
     protected ListenerAdapterHolder doCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -22,11 +22,11 @@ public class ListenerAdapter extends BaseRVAdapter<Listener, ListenerAdapter.Lis
     }
 
     @Override
-    protected void bindItemData(ListenerAdapterHolder viewHolder, Listener listener, int position) {
-        viewHolder.bindView(listener, position);
+    protected void bindItemData(ListenerAdapterHolder viewHolder, DoctorBean doctorBean, int position) {
+        viewHolder.bindView(doctorBean, position);
     }
 
-    public class ListenerAdapterHolder extends RecyclerView.ViewHolder implements IViewHolder<Listener> {
+    public class ListenerAdapterHolder extends RecyclerView.ViewHolder implements IViewHolder<DoctorBean> {
 
         @BindView(R.id.tv_title_item_listener)
         TextView mTitle;
@@ -39,9 +39,9 @@ public class ListenerAdapter extends BaseRVAdapter<Listener, ListenerAdapter.Lis
         }
 
         @Override
-        public void bindView(Listener book, int position) {
-            mTitle.setText(book.getTitle());
-            mIntroduce.setText(book.getIntroduce());
+        public void bindView(DoctorBean doctorBean, int position) {
+            mTitle.setText(doctorBean.getDoctorName());
+            mIntroduce.setText(doctorBean.getGoodAt());
         }
     }
 }

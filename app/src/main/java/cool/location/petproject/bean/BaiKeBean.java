@@ -2,7 +2,7 @@ package cool.location.petproject.bean;
 
 import cn.bmob.v3.BmobObject;
 
-public class Listener extends BmobObject {
+public class BaiKeBean extends BmobObject {
 
     private String title;
     private String introduce;
@@ -34,7 +34,7 @@ public class Listener extends BmobObject {
 
     @Override
     public String toString() {
-        return "Listener{" +
+        return "BaiKeBean{" +
                 "title='" + title + '\'' +
                 ", introduce='" + introduce + '\'' +
                 ", value='" + value + '\'' +

@@ -26,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TranslateFragment extends Fragment {
+public class NoteFragment extends Fragment {
 
     @BindView(R.id.edt_translate) EditText mTranslateEditText;
     @BindView(R.id.btn_translate) Button mTranslateButton;

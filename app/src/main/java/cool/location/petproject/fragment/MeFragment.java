@@ -30,7 +30,7 @@ import cool.location.petproject.bean.VideoBean;
 import cool.location.petproject.utils.ActivityUtil;
 
 
-public class VideoFragment extends Fragment implements View.OnTouchListener {
+public class MeFragment extends Fragment implements View.OnTouchListener {
 
     @BindView(R.id.rlv_video_fragment) RecyclerView mRecyclerView;
     private VideoAdapter mVideoAdapter;
@@ -74,7 +74,7 @@ public class VideoFragment extends Fragment implements View.OnTouchListener {
                     @Override
                     public void done(List<VideoBean> listenerList, BmobException e) {
                         if (e == null) {
-                            LogUtils.d("ListenerFragment BmobQuery success:" + listenerList);
+                            LogUtils.d("DoctorFragment BmobQuery success:" + listenerList);
                             mListenerList = listenerList;
                             if (mVideoAdapter == null) {
                                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -87,7 +87,7 @@ public class VideoFragment extends Fragment implements View.OnTouchListener {
                             }
 
                         } else {
-                            LogUtils.d("ListenerFragment BmobQuery failed : " + e);
+                            LogUtils.d("DoctorFragment BmobQuery failed : " + e);
                         }
                     }
                 });
@@ -98,7 +98,7 @@ public class VideoFragment extends Fragment implements View.OnTouchListener {
         public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
             if (mVideoAdapter == null) { return; }
             VideoBean videoBean = mVideoAdapter.getItem(position);
-            ActivityUtil.startPlayVideoActivity(VideoFragment.this, videoBean);
+            ActivityUtil.startPlayVideoActivity(MeFragment.this, videoBean);
         }
     };
 

@@ -55,7 +55,7 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".activity.PlayListenerActivity"
+            android:name=".activity.SendNoteActivity"
             android:screenOrientation="portrait"/>
 
         <activity

@@ -1,39 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
+    android:background="@drawable/icon_welcom"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/edt_translate"
+    <TextView
+        android:id="@+id/tv_title_note_activity"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/bg_translate_next"
-        android:gravity="center"
-        android:hint="请输入要翻译的单词或者句子"
-        android:textSize="18sp"/>
-
-    <Button
-        android:id="@+id/btn_translate"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:text="翻译"/>
+        android:gravity="center"
+        android:text="社区交流"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/tv_translate_result"
-        android:layout_width="match_parent"
+        android:id="@+id/tv_send_note_activity"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:gravity="center"
-        android:textSize="18sp"/>
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        android:padding="5dp"
+        android:text="发布"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_note_activity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_title_note_activity"
+        android:layout_marginBottom="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="16dp">
+
+    </android.support.v7.widget.RecyclerView>
 
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/tv_empty_note_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:padding="5dp"
+        android:text="还未有编写的帖子"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="gone"/>
+
+</RelativeLayout>

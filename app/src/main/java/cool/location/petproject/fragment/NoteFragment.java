@@ -1,36 +1,47 @@
 package cool.location.petproject.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cool.location.petproject.R;
-import cool.location.petproject.bean.TranslateResponse;
-import cool.location.petproject.http.ApiEndpointClient;
-import cool.location.petproject.utils.MD5Util;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import cool.location.petproject.activity.SendNoteActivity;
+import cool.location.petproject.adapter.NoteAdapter;
+import cool.location.petproject.bean.Note;
 
-public class NoteFragment extends Fragment {
+public class NoteFragment extends Fragment implements View.OnTouchListener {
 
-    @BindView(R.id.edt_translate) EditText mTranslateEditText;
-    @BindView(R.id.btn_translate) Button mTranslateButton;
-    @BindView(R.id.tv_translate_result) TextView mTranslateResult;
+    @BindView(R.id.tv_title_note_activity) TextView mTitle;
+    @BindView(R.id.tv_send_note_activity) TextView mSendNote;
+    @BindView(R.id.rv_note_activity) RecyclerView mRecyclerView;
+    @BindView(R.id.tv_empty_note_activity) TextView tvEmptyNoteActivity;
+
+    List<Note> noteList = new ArrayList<>();
+
+    private NoteAdapter noteAdapter;
+
     Unbinder unbinder;
 
     @Override
@@ -41,45 +52,64 @@ public class NoteFragment extends Fragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        view.setOnTouchListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getMediaData();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
-    @OnClick(R.id.btn_translate)
-    public void translateClicked() {
-        String inputText = mTranslateEditText.getText().toString();
-        String from = "zh";
-        String to = "en";
-        String appid = "20190213000266387";
-        String scrientID = "veKhArlI7EdZDD_WKTti";
-        String salt = "1435660288";
-        String unSign = appid + inputText + salt + scrientID;
-        String sign = MD5Util.md5Encode(unSign);
-        LogUtils.d("translateClicked  sign ： " + sign);
-        ApiEndpointClient.getEndpointV2().translate(inputText, from, to, appid, salt, sign)
-                .enqueue(new Callback<TranslateResponse>() {
-                    @Override
-                    public void onResponse(Call<TranslateResponse> call, Response<TranslateResponse> response) {
-                        TranslateResponse translateResponse = response.body();
-                        LogUtils.d("translateClicked  translate success translateResponse :" + translateResponse);
-                        if (translateResponse != null) {
-                            List<TranslateResponse.TransResultBean> transResult = translateResponse.getTransResult();
-                            if (transResult != null && transResult.size() > 0) {
-                                TranslateResponse.TransResultBean resultBean = transResult.get(0);
-                                if (mTranslateResult != null) {
-                                    mTranslateResult.setText(resultBean.getDst());
-                                }
-                            }
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        return true;
+    }
 
+    public void getMediaData() {
+        BmobQuery<Note> query = new BmobQuery<Note>();
+        // 按时间降序查询
+        query.order("-createdAt");
+        query.setLimit(80);
+        //从服务器获取衣服图片 集合 Arraylist
+        query.findObjects(new FindListener<Note>() {
+            @Override
+            public void done(List<Note> list, BmobException e) {
+                if (e == null) {
+                    noteList = list;
+                    if (noteList.size() == 0) {
+                        if (tvEmptyNoteActivity == null) {return;}
+                        tvEmptyNoteActivity.setText("还未有编写的帖子");
+                        tvEmptyNoteActivity.setVisibility(View.VISIBLE);
+                    } else {
+                        if (mRecyclerView != null) {
+                            tvEmptyNoteActivity.setVisibility(View.GONE);
+                            mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                            noteAdapter = new NoteAdapter(noteList, getActivity());
+                            mRecyclerView.setAdapter(noteAdapter);
                         }
                     }
+                } else {
+                    if (tvEmptyNoteActivity == null) {return;}
+                    LogUtils.e("NoteActivity e =" + e);
+                    tvEmptyNoteActivity.setText("获取数据失败");
+                    tvEmptyNoteActivity.setVisibility(View.VISIBLE);
+                }
 
-                    @Override
-                    public void onFailure(Call<TranslateResponse> call, Throwable t) {
-                        LogUtils.d("translateClicked  translate failed Throwable :" + t);
-                    }
-                });
+            }
+        });
+    }
 
+    @OnClick(R.id.tv_send_note_activity)
+    public void senNote() {
+        startActivity(new Intent(getActivity(), SendNoteActivity.class));
     }
 }

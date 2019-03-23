@@ -21,7 +21,8 @@
 
     <uses-feature android:name="android.hardware.camera"/>
     <uses-feature android:name="android.hardware.camera.autofocus"/>
-    <uses-permission  android:name="android.permission.CALL_PHONE" />
+
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application
         android:name=".base.CCApplication"
@@ -56,16 +57,18 @@
         <activity
             android:name=".activity.SendNoteActivity"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".activity.RegisterActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".activity.ChangePwdActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".activity.EditPetInfoActivity"
             android:screenOrientation="portrait"/>
 
     </application>
